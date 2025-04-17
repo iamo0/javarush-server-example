@@ -1,0 +1,19 @@
+{
+  "name": "js-server-2",
+  "version": "1.0.0",
+  "description": "Как такового языка JavaScript не существует. Существует стандарт, который называется ECMAScript. w3c. Этот стандарт описывает синтаксис языка",
+  "main": "index.js",
+  "scripts": {
+    "math": "node ./math.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "react": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1"
+  }
+}
