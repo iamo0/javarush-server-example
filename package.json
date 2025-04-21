@@ -4,7 +4,9 @@
   "description": "Как такового языка JavaScript не существует. Существует стандарт, который называется ECMAScript. w3c. Этот стандарт описывает синтаксис языка",
   "main": "index.js",
   "scripts": {
-    "math": "node ./math.js"
+    "math": "node ./math.js",
+    "dev": "node --watch ./express-server.js",
+    "start": "node --watch ./express-server.js"
   },
   "author": "",
   "license": "ISC",

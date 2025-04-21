@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <h1>Hello from <code>index.html</code> file</h1>
+
+  <main>
+    <section>
+      <h2>Наши преимущества</h2>
+      <ul id="advantages">
+        <li>Оперативность</li>
+        <li>Клиентоориентированность</li>
+        <li>Вежливость</li>
+        <li>Грубость</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="/js/index.js"></script>
+  <!--
+    В какой момент появится настоящий тег <script>?
+    1. Пользователь сделает запрос на /
+    2. Наш сервер прочитает этот __текстовый__ файл
+    3. Сервер отдаст текст этого файла как HTML-ответ (сказав это через заголовки)
+    4. Браузер начнет разбирать по кусочкам контент этого файла как HTML
+    5. Когда браузер увидит тег <script> он сделает запрос на наш сервер по адресу
+      `/js/index.js`
+  -->
+
+</body>
+</html>

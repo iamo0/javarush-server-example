@@ -1,9 +1,28 @@
+const fs = require("fs");
 const express = require("express");
-const cors = require("cors");
 
 const PORT = 4001;
 
 const server = express();
+
+
+const News = {
+  "1": {
+    title: "Конь-Людоед в программе Поле Чудес",
+    date: "2024-10-10",
+    text: "<p>Гаишник дал взятку сотруднику ГАИ</p>",
+  },
+  "2": {
+    title: "Прошла лекция по программированию",
+    date: "2025-04-21",
+    text: "<p>Лекция прошла на немецком</p>",
+  },
+  "3": {
+    title: "Добавилась новость",
+    date: "2025-04-21",
+    text: "<p>Лектор были в восторге</p>",
+  },
+};
 
 
 // Express
@@ -19,48 +38,90 @@ const router = express.Router();
 
 // Маршрут для главной страницы
 router.get("/", function (req, res) {
-  res.send("Hello from Express!");
+  try {
+    const data = fs.readFileSync('./views/index.nehtml', { encoding: 'utf8', flag: 'r' });
+    res.status(200);
+    res.setHeader("Content-Type", "text/html");
+    res.send(data);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 });
 
-router.get("/news", function (req, res) {
-  // Chaning
-  res
-    .status(200)
-    .json({
-      id: "1",
-      title: "Конь-людоед в программе Поле Чудес",
-      pic: "",
-      url: "/news/1",
-    });
-});
+router.get("/news/", function(req, res) {
+  try {
+    res.status(200);
+    res.setHeader("Content-Type", "text/html");
+    res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/css/main.css" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
 
-router.get("/news/:id", function (req, res) {
-  const newsID = req.params.id;
+  <h1>Свежайшие новости</h1>
 
-  // Chaning
-  res
-    .status(200)
-    .send(`Certain piece of news with id ${newsID}`);
-});
-
-server.use(function(req, res, next) {
-  res.header("Content-Type", "application/json");
-  next();
-});
-
-server.use(cors);
-
-server.use(function(req, res, next) {
-  const auth = req.headers.get("Authorization");
-
-  if (auth && auth === "iwjdijw98u88u") {
-    next();
-    return;
+  <ul>${
+    Object.entries(News).map(([id, n]) => `<li><date>${n.date}</date><a href="/news/${id}">${n.title}</a></li>`).join("")
   }
 
-  res.send(403);
+</body>
+</html>
+`);
+  } catch (err) {
+    res.sendStatus(500);
+  }
 });
 
+router.get("/news/:newsId", function(req, res) {
+  try {
+    const pieceOfNews = News[req.params.newsId];
+
+    if (pieceOfNews === undefined) {
+      return res.sendStatus(404);
+    }
+
+    res.status(200);
+    res.setHeader("Content-Type", "text/html");
+    res.render(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <h1>${pieceOfNews.title}</h1>
+  <date>${pieceOfNews.date}</date>
+
+  <article>${pieceOfNews.text}</article>
+
+</body>
+</html>
+`);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
+router.get("/:addr", function (req, res) {
+  try {
+    const data = fs.readFileSync(`./views/${req.params.addr}.nehtml`, { encoding: 'utf8', flag: 'r' });
+    res.status(200);
+    res.setHeader("Content-Type", "text/html");
+    res.send(data);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
+
+// Middleware
+server.use(express.static("static"));
 server.use(router);
 
 // Middleware
