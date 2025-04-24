@@ -6,7 +6,8 @@
   "scripts": {
     "math": "node ./math.js",
     "dev": "node --watch ./express-server.js",
-    "start": "node --watch ./express-server.js"
+    "start": "node --watch ./express-server.js",
+    "test": "node ./utils/math.test.js"
   },
   "author": "",
   "license": "ISC",
